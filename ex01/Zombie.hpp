@@ -9,9 +9,10 @@ class Zombie {
 
  public:
     void announce() const;
+    bool setName(std::string name);
+    Zombie();
     explicit Zombie(std::string name);
     ~Zombie();
 };
 
-Zombie* newZombie(std::string name);
-void randomChump(std::string name);
+Zombie* zombieHorde(int N, std::string name);
