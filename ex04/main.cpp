@@ -2,7 +2,7 @@
 #include <fstream>
 #include <string>
 
-bool readFileToString(const char* filename, std::string& content) {
+bool readFileToString(const char *filename, std::string *content) {
     std::ifstream file(filename, std::ios::in);
     if (!file) {
         return false;
@@ -15,14 +15,15 @@ bool readFileToString(const char* filename, std::string& content) {
     char* buffer = new char[length];
     file.read(buffer, length);
 
-    content = std::string(buffer, length);
+    *content = std::string(buffer, length);
     delete[] buffer;
     return true;
 }
 
 int main(int argc, char **argv) {
     if (argc != 4) {
-        std::cerr << "Usage: " << argv[0] << " <filename> <s1> <s2>" << std::endl;
+        std::cerr << "Usage: " << argv[0]
+            << " <filename> <s1> <s2>" << std::endl;
         return 1;
     }
     if (argv[2][0] == '\0') {
@@ -32,7 +33,7 @@ int main(int argc, char **argv) {
     std::string s1 = argv[2];
     std::string s2 = argv[3];
     std::string content;
-    if (!readFileToString(argv[1], content)) {
+    if (!readFileToString(argv[1], &content)) {
         std::cerr << "Error: could not read file " << argv[1] << std::endl;
         return 1;
     }
@@ -52,7 +53,8 @@ int main(int argc, char **argv) {
     std::string newFilename = std::string(argv[1]) + ".replace";
     std::ofstream file(newFilename.c_str(), std::ios::out);
     if (!file) {
-        std::cerr << "Error: could not write file " << newFilename << std::endl;
+        std::cerr << "Error: could not write file "
+            << newFilename << std::endl;
         return 1;
     }
     file << newContent;
